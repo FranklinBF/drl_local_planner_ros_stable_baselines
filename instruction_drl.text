@@ -1,0 +1,48 @@
+1. install docker
+2. download an image from docker hub, by input following lines in terminal:
+
+docker pull yz16/my_ros
+
+3. generate docker container, by input following lines in terminal:
+
+docker run --name ros_env \
+--mount type=bind,source=/Users/yourcomputer/volumn/ros_workspace,target=/root/ros_workspaces \
+-itd -p 6080:80 yz16/my_ros
+
+4. open browser  http://127.0.0.1:6080, and start to play 
+
+5. https://github.com/RGring/drl_local_planner_ros_stable_baselines 
+
+download this github and save it to /root/ros_workspaces
+
+6. following her steps and there're some additional things to be paid attention:
+
+zero:
+rl_bringup/config/path_config.ini 
+the paths in this folder should be given w.r.t to our computer.
+
+first:
+Error: about opencv version in ROS
+/opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so
+
+cv2.so in ROS should be renamed to cv2_ros.so
+
+second:
+Error: cannot find tinker
+sudo apt-get install python3-tk
+
+third:
+path not valid:
+create folders as in rl_bringup/config/path_config.ini shows
+
+forth:
+Lack: moveit  rviz
+sudo apt-get install ros-kinetic-moveit-ros-visualization
+
+fifth:
+when there's a bug, please 
+rerun:
+roslaunch rl_bringup setup.launch ns:="sim1" rl_params:="rl_params_scan"
+&
+the run agent commands such as 
+roslaunch rl_agent run_ppo_agent.launch mode:="train"
